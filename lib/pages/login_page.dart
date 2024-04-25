@@ -41,11 +41,11 @@ class _LoginPageState extends State<LoginPage> {
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
-    Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email);
+    Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email1);
     showSnackMassage(context, 'success');
   }
 
-  String? password, email;
+  String? password1, email1;
 
   bool isLoading = false;
 
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 CustomFormTextField(
                   onChanged: (data) {
-                    email = data;
+                    email1 = data;
                   },
                   hintText: 'Email',
                 ),
@@ -98,13 +98,13 @@ class _LoginPageState extends State<LoginPage> {
                 CustomFormTextField(
                   obscureText: true,
                   onChanged: (data) {
-                    password = data;
+                    password1 = data;
                   },
                   hintText: 'Password',
                 ),
                 InkWell(
                   onTap: () async {
-                    if (email == null) {
+                    if (email1 == null) {
                       AwesomeDialog(
                         context: context,
                         dialogType: DialogType.error,
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     try {
                       await FirebaseAuth.instance
-                          .sendPasswordResetEmail(email: email!);
+                          .sendPasswordResetEmail(email: email1!);
                       AwesomeDialog(
                         context: context,
                         dialogType: DialogType.infoReverse,
@@ -162,12 +162,12 @@ class _LoginPageState extends State<LoginPage> {
                       try {
                         final credential = await FirebaseAuth.instance
                             .signInWithEmailAndPassword(
-                                email: email!, password: password!);
+                                email: email1!, password: password1!);
                         showSnackMassage(context, 'success');
                         if (credential.user!.emailVerified) {
                           Navigator.of(context).pushReplacementNamed(
                               HomeView.id,
-                              arguments: email);
+                              arguments: email1);
                         } else {
                           showSnackMassage(context, 'Verified your Email');
                           AwesomeDialog(

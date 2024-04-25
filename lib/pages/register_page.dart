@@ -96,6 +96,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   onChanged: (data) {
                     email = data;
                   },
+                  hintText: 'User Name',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomFormTextField(
+                  onChanged: (data) {
+                    email = data;
+                  },
                   hintText: 'Email',
                 ),
                 const SizedBox(
