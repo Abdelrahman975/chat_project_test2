@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 import '../../constant.dart';
@@ -50,7 +52,7 @@ class _ReminderFormState extends State<ReminderForm> {
     );
 
     if (picked != null && picked != DateTime.now()) {
-      startDateController.text = picked.toLocal().toString();
+      startDateController.text = DateFormat('yyyy-MM-dd').format(picked);
     }
   }
 
@@ -63,7 +65,7 @@ class _ReminderFormState extends State<ReminderForm> {
     );
 
     if (picked != null && picked != DateTime.now()) {
-      endDateController.text = picked.toLocal().toString();
+      endDateController.text = DateFormat('yyyy-MM-dd').format(picked);
     }
   }
 
@@ -80,126 +82,198 @@ class _ReminderFormState extends State<ReminderForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextField(
-            controller: medicationNameController,
-            decoration: const InputDecoration(
-              labelText: 'Medicine Name',
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              controller: medicationNameController,
+              decoration: const InputDecoration(
+                labelText: 'Medicine Name',
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: startDateController,
-                  decoration: const InputDecoration(labelText: 'Start Date'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
-                onPressed: _selectStartDate,
-                child: const Text(
-                  'Start Date',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: startDateController,
+                    decoration: const InputDecoration(labelText: 'Start Date'),
+                    readOnly: true,
+                    onTap: _selectStartDate,
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: endDateController,
-                  decoration: const InputDecoration(labelText: 'End Date'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
-                onPressed: _selectEndDate,
-                child: const Text(
-                  'End Date',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
+                  onPressed: _selectStartDate,
+                  child: const Text(
+                    'Start Date',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: dailyTimeController,
-                  decoration: const InputDecoration(labelText: 'Daily Time'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
-                onPressed: _selectDailyTime,
-                child: const Text(
-                  'Time',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: endDateController,
+                    decoration: const InputDecoration(labelText: 'End Date'),
+                    readOnly: true,
+                    onTap: _selectEndDate,
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: descriptionController,
-            decoration: const InputDecoration(labelText: 'Description'),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
-            onPressed: () async {
-              if (mounted) {
-                String medicationName = medicationNameController.text;
-                String startDate = startDateController.text;
-                String endDate = endDateController.text;
-                String dailyTime = dailyTimeController.text;
-                String description = descriptionController.text;
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
+                  onPressed: _selectEndDate,
+                  child: const Text(
+                    'End Date',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: dailyTimeController,
+                    decoration: const InputDecoration(labelText: 'Daily Time'),
+                    readOnly: true,
+                    onTap: _selectDailyTime,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: KprimaryColor2),
+                  onPressed: _selectDailyTime,
+                  child: const Text(
+                    'Time',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(labelText: 'Description'),
+              maxLines: 4,
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: KprimaryColor2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    if (mounted) {
+                      String medicationName = medicationNameController.text;
+                      String startDate = startDateController.text;
+                      String endDate = endDateController.text;
+                      String dailyTime = dailyTimeController.text;
+                      String description = descriptionController.text;
 
-                logger.i('Medicine Name: $medicationName');
-                logger.i('Start Date: $startDate');
-                logger.i('End Date: $endDate');
-                logger.i(' Daily Time: $dailyTime');
-                logger.i('Description: $description');
-              }
-            },
-            child: const Text(
-              'Save',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 40.0,
-                fontWeight: FontWeight.bold,
-              ),
+                      logger.i('Medicine Name: $medicationName');
+                      logger.i('Start Date: $startDate');
+                      logger.i('End Date: $endDate');
+                      logger.i('Daily Time: $dailyTime');
+                      logger.i('Description: $description');
+
+                      // Show a reminder dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Reminder'),
+                            content: Text(
+                              'Please take your $medicationName at $dailyTime.',
+                              style: const TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Remind Me',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: KprimaryColor2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    if (mounted) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
