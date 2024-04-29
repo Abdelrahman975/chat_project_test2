@@ -1,8 +1,12 @@
 import 'package:chat_project_test2/models/services_category_model.dart';
-import 'package:chat_project_test2/pages/Reminder/reminder_page.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../constant.dart';
+import '../Chat/Chat_AI_Genret/AI_chatbot.dart';
+import '../Chat/Gemini_chat/gemini_chats_screen.dart';
+import '../NewaTest1/screens/News_page.dart';
+
 import 'widget/services_home_wedget.dart';
 import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
 import '../Reminder/reminder_page1.dart';
@@ -44,7 +48,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(11)),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, ReminderPage.id);
+                    Navigator.pushNamed(context, News_page.id);
                   },
                   child: Container(
                     height: 160,
@@ -86,8 +90,8 @@ class HomePage extends StatelessWidget {
                     ServicesWidgets(
                       category: ServicesCategoryModel(
                           image: 'assets/images/AI_Chatbot.png',
-                          categoryName: 'AI_Chatbot',
-                          categoryNamePage: ReminderPage.id),
+                          categoryName: 'AI Chatbot',
+                          categoryNamePage: Ai_ChatBot.id),
                     ),
                     const SizedBox(
                       width: 6,
@@ -104,8 +108,8 @@ class HomePage extends StatelessWidget {
                     ServicesWidgets(
                       category: ServicesCategoryModel(
                           image: 'assets/images/chatbot.png',
-                          categoryName: 'chatbot',
-                          categoryNamePage: ReminderPage.id),
+                          categoryName: 'Chatbot',
+                          categoryNamePage: GeminiChatScreen.id),
                     ),
                   ],
                 ),
@@ -123,7 +127,7 @@ class HomePage extends StatelessWidget {
                     ServicesWidgets(
                       category: ServicesCategoryModel(
                           image: 'assets/images/All_Doctors.jpg',
-                          categoryName: 'All Doctors',
+                          categoryName: ' Doctors',
                           categoryNamePage: AllDoctorsViewBuilder.id),
                     ),
                     const SizedBox(

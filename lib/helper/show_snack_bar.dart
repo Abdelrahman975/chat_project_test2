@@ -5,7 +5,7 @@ void showSnackMassage(BuildContext context, String Massage) {
     SnackBar(
       content: Text(Massage),
       backgroundColor: Color(0xffbabbbf),
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 600),
     ),
   );
 }

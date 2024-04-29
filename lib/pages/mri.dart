@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../constant.dart';
+import 'home/drawer/drawer_screen.dart';
+
 class MRI_Page extends StatefulWidget {
   static String id = 'MRI Page';
   const MRI_Page({super.key});
@@ -40,14 +43,9 @@ class _MRI_PageState extends State<MRI_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer_widget(),
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        backgroundColor: KprimaryColor2,
         title: const Text('MRI'),
       ),
       body: Center(
@@ -79,11 +77,11 @@ class _MRI_PageState extends State<MRI_Page> {
                     ElevatedButton(
                       onPressed: () => _getImage(ImageSource.gallery),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent,
+                        backgroundColor: KprimaryColor2,
                       ),
                       child: const Text(
                         'Select Image ',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: KprimaryColor3),
                       ),
                     ),
                   ],
@@ -96,11 +94,11 @@ class _MRI_PageState extends State<MRI_Page> {
                     ElevatedButton(
                       onPressed: _processImage,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent,
+                        backgroundColor: KprimaryColor2,
                       ),
                       child: const Text(
                         'Get Result',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: KprimaryColor3),
                       ),
                     ),
                   ],

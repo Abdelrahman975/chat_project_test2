@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../constant.dart';
-import '../models/message.dart';
-import '../widgets/chat_buble.dart';
+import '../../../constant.dart';
+import 'model/message.dart';
+import 'widgets/chat_buble.dart';
 
 // ignore: must_be_immutable
 class ChatPage extends StatelessWidget {

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../../constant.dart';
 
+import '../../home/drawer/drawer_screen.dart';
 import 'all_doctor_list_view.dart';
 
 class AllDoctorsViewBuilder extends StatefulWidget {
@@ -18,6 +19,7 @@ class _AllDoctorsViewBuilderState extends State<AllDoctorsViewBuilder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer_widget(),
       appBar: AppBar(
         backgroundColor: KprimaryColor2,
         title: Text(

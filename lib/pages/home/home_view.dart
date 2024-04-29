@@ -9,6 +9,7 @@ import '../All_Hospitals/all_hospitals_pages.dart';
 import '../Auth/Profile/profilePage.dart';
 import '../Auth/login_page.dart';
 import '../notifications_screen.dart';
+import 'drawer/drawer_screen.dart';
 import 'home_page.dart';
 // import 'pages/reminder_page.dart';
 
@@ -21,28 +22,31 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int currentIndex = 0;
+  PageController _pageController = PageController();
+
   List<Widget> pages = [
     const HomePage(),
     const AllDoctorsViewBuilder(),
     const AllHospitalsPage(),
-    const ProfilePage(),
+    // const ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer_widget(),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         backgroundColor: KprimaryColor2,
         elevation: 0,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 5),
-          child: CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(
-                'assets/images/person1.png'), // Add your profile image
-          ),
-        ),
+        // leading: const Padding(
+        //   padding: EdgeInsets.only(left: 5),
+        //   child: CircleAvatar(
+        //     radius: 20,
+        //     backgroundImage: AssetImage(
+        //         'assets/images/person1.png'), // Add your profile image
+        //   ),
+        // ),
         title: Row(
           children: [
             const Text(
@@ -63,79 +67,116 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: KprimaryColor3,
-            ),
-            color: Colors.black,
-            onPressed: () {
-              Navigator.pushNamed(context, ReminderPage.id);
-              // Handle settings button press
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            color: KprimaryColor3,
-            onPressed: () async {
-              GoogleSignIn googleSignIn = GoogleSignIn();
-              googleSignIn.disconnect();
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(LoginPage.id, (route) => false);
-            },
-          ),
-        ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: pages.elementAt(currentIndex),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: KprimaryColor2,
-        selectedItemColor: Colors.black, // Set the selected item color
-        unselectedItemColor: Colors.black, // Set the unselected item color
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: KprimaryColor3,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.perm_contact_calendar_outlined,
-              color: KprimaryColor3,
-            ),
-            label: 'All Doctors',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.local_hospital_outlined,
-              color: KprimaryColor3,
-            ),
-            label: 'All Hospitals',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: KprimaryColor3,
-            ),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: currentIndex,
-        onTap: (value) {
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: pages.length,
+        onPageChanged: (value) {
           setState(() {
             currentIndex = value;
           });
         },
+        itemBuilder: (context, index) {
+          return pages[index];
+        },
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: KprimaryColor2,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List<Widget>.generate(pages.length, (int index) {
+            return GestureDetector(
+              onTap: () {
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    index == 0
+                        ? Icons.home
+                        : index == 1
+                            ? Icons.perm_contact_calendar_outlined
+                            : Icons.person,
+                    color:
+                        currentIndex == index ? Colors.black : KprimaryColor3,
+                  ),
+                  Text(
+                    index == 0
+                        ? 'home'
+                        : index == 1
+                            ? 'All Doctors'
+                            : 'All Hospitals',
+                    style: TextStyle(
+                      color:
+                          currentIndex == index ? Colors.black : KprimaryColor3,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
 }
+
+
+
+
+
+//  bottomNavigationBar: Container(
+//         margin: EdgeInsets.all(12),
+//         decoration: BoxDecoration(
+//             color: Colors.black, borderRadius: BorderRadius.circular(16)),
+//         child: BottomNavigationBar(
+//           backgroundColor: Colors.black,
+//           selectedItemColor: Colors.black, // Set the selected item color
+//           // unselectedItemColor: Colors.black, // Set the unselected item color
+//           items: const [
+//             BottomNavigationBarItem(
+//               icon: Icon(
+//                 Icons.home,
+//                 color: KprimaryColor3,
+//               ),
+//               label: 'Home',
+//             ),
+//             BottomNavigationBarItem(
+//               icon: Icon(
+//                 Icons.perm_contact_calendar_outlined,
+//                 // color: KprimaryColor3,
+//               ),
+//               label: 'All Doctors',
+//             ),
+//             BottomNavigationBarItem(
+//               icon: Icon(
+//                 Icons.local_hospital_outlined,
+//                 color: KprimaryColor3,
+//               ),
+//               label: 'All Hospitals',
+//             ),
+//             BottomNavigationBarItem(
+//               icon: Icon(
+//                 Icons.person,
+//                 color: KprimaryColor3,
+//               ),
+//               label: 'Profile',
+//             ),
+//           ],
+//           currentIndex: currentIndex,
+//           onTap: (value) {
+//             setState(() {
+//               currentIndex = value;
+//             });
+//           },
+//         ),

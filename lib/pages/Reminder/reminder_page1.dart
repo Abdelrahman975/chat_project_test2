@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../../constant.dart';
+import '../home/drawer/drawer_screen.dart';
 
 class Reminder_page1 extends StatelessWidget {
   const Reminder_page1({super.key});
@@ -9,6 +10,7 @@ class Reminder_page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer_widget(),
       appBar: AppBar(
         title: const Text('Medication Reminder'),
         backgroundColor: KprimaryColor2,
