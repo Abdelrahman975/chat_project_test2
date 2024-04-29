@@ -22,7 +22,7 @@ class ALLHospitalsContainer extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
           child: Container(
             padding: EdgeInsets.all(5),
-            height: 200,
+            height: 250,
             width: 240,
             decoration: const BoxDecoration(
               color: KprimaryColor4,
@@ -32,7 +32,7 @@ class ALLHospitalsContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 125,
+                  height: 115,
                   width: 220,
                   margin: EdgeInsets.all(5),
                   decoration: BoxDecoration(

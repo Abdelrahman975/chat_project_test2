@@ -15,22 +15,11 @@ class AllHospitalsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KprimaryColor4,
-      appBar: AppBar(
-        backgroundColor: KprimaryColor2,
-        title: Text(
-          'Top Hospitals',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: ListView(children: [
           SizedBox(
-            height: 215,
+            height: 230,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 5,
@@ -40,7 +29,7 @@ class AllHospitalsPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 90,
+            height: 50,
           ),
           AboutHospitalDetalisl(),
           SizedBox(
@@ -58,7 +47,7 @@ class AllHospitalsPage extends StatelessWidget {
             height: 20,
           ),
           SizedBox(
-            height: 250,
+            height: 260,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 5,

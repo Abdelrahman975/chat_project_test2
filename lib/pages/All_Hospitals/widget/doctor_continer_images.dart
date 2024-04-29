@@ -32,7 +32,7 @@ class DoctorContinerImages extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 160,
+                  height: 140,
                   width: 150,
                   margin: EdgeInsets.all(5),
                   decoration: BoxDecoration(

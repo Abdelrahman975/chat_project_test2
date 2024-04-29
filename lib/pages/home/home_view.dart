@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../constant.dart';
+import '../All Doctor/All_Doctor_pages/all_doctor_list_view.dart';
 import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
 import '../All_Hospitals/all_hospitals_pages.dart';
 import '../Auth/Profile/profilePage.dart';
@@ -26,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
 
   List<Widget> pages = [
     const HomePage(),
-    const AllDoctorsViewBuilder(),
+    const AllDactor_listview(),
     const AllHospitalsPage(),
     // const ProfilePage(),
   ];
