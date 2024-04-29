@@ -2,7 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constant.dart';
-import 'login_page.dart';
+import 'Auth/login_page.dart';
 
 class AnimatedSplashPage extends StatelessWidget {
   const AnimatedSplashPage({super.key});

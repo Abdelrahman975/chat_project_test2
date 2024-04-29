@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../constant.dart';
-import '../../../widgets/custom_button.dart';
-import '../about_doctor_pages/about_doctor_container.dart';
-import '../about_doctor_pages/custom_button_dcotor.dart';
-import 'paymen_dtetails_contener.dart';
+import '../../Auth/widget/custom_button.dart';
+import '../about_doctor_pages/widget/about_doctor_container.dart';
+import '../about_doctor_pages/widget/custom_button_dcotor.dart';
+import 'widget/paymen_dtetails_contener.dart';
 
 class Proceed_page extends StatelessWidget {
   const Proceed_page({super.key});

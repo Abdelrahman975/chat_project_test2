@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../constant.dart';
-import '../helper/show_snack_bar.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
+import '../../constant.dart';
+import '../../helper/show_snack_bar.dart';
+import 'widget/custom_button.dart';
+import 'widget/custom_text_field.dart';
 import 'register_page.dart';
-import 'home/home_view.dart';
+import '../home/home_view.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -96,6 +96,10 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 CustomFormTextField(
+                  iconss: IconButton(
+                    icon: Icon(Icons.remove_red_eye_rounded),
+                    onPressed: () {},
+                  ),
                   obscureText: true,
                   onChanged: (data) {
                     password1 = data;
@@ -242,7 +246,29 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 1,
+                      color: Colors.grey[900],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text('OR'),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 1,
+                      color: Colors.grey[900],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 CustomButtomImage(
                   titel: 'Login With Google',

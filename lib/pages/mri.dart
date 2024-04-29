@@ -4,14 +4,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageScreen extends StatefulWidget {
-  const ImageScreen({super.key});
+class MRI_Page extends StatefulWidget {
+  static String id = 'MRI Page';
+  const MRI_Page({super.key});
 
   @override
-  _ImageScreenState createState() => _ImageScreenState();
+  _MRI_PageState createState() => _MRI_PageState();
 }
 
-class _ImageScreenState extends State<ImageScreen> {
+class _MRI_PageState extends State<MRI_Page> {
   File? _imageFile;
   double _progress = 0.0;
 

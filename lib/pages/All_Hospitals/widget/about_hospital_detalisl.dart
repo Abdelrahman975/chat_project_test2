@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constant.dart';
+import '../../../constant.dart';
 
 class AboutHospitalDetalisl extends StatelessWidget {
   const AboutHospitalDetalisl({

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../constant.dart';
-import '../All Doctor/Book_Now_pages/date_book_button.dart';
-import 'about_hospital_detalisl.dart';
-import 'abuot_hospital_images.dart';
-import 'all_hospitals_container.dart';
-import 'doctor_continer_images.dart';
+import '../All Doctor/Book_Now_pages/widget/date_book_button.dart';
+import 'widget/about_hospital_detalisl.dart';
+import 'widget/abuot_hospital_images.dart';
+import 'widget/all_hospitals_container.dart';
+import 'widget/doctor_continer_images.dart';
 
 class AllHospitalsPage extends StatelessWidget {
   const AllHospitalsPage({super.key});

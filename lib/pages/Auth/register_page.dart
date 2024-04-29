@@ -6,11 +6,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../constant.dart';
-import '../helper/show_snack_bar.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
-import 'home/home_view.dart';
+import '../../constant.dart';
+import '../../helper/show_snack_bar.dart';
+import 'widget/custom_button.dart';
+import 'widget/custom_text_field.dart';
+import '../home/home_view.dart';
 import 'login_page.dart';
 
 // ignore: must_be_immutable
@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   String? email;
-
+  String? user_name;
   String? password;
 
   bool isLoading = false;
@@ -94,9 +94,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 CustomFormTextField(
                   onChanged: (data) {
-                    email = data;
+                    user_name = data;
                   },
-                  hintText: 'User Name',
+                  hintText: 'Create User Name',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomFormTextField(
+                  onChanged: (data) {
+                    user_name = data;
+                  },
+                  hintText: 'Enter Phone Number',
                 ),
                 const SizedBox(
                   height: 15,
@@ -105,17 +114,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   onChanged: (data) {
                     email = data;
                   },
-                  hintText: 'Email',
+                  hintText: 'Enter Email',
                 ),
                 const SizedBox(
                   height: 18,
                 ),
                 CustomFormTextField(
+                  iconss: IconButton(
+                    icon: Icon(Icons.remove_red_eye_rounded),
+                    onPressed: () {},
+                  ),
                   obscureText: true,
                   onChanged: (data) {
                     password = data;
                   },
-                  hintText: 'Password',
+                  hintText: 'Create Password',
                 ),
                 const SizedBox(
                   height: 20,
@@ -216,7 +229,29 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 const SizedBox(
-                  height: 70,
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 1,
+                      color: Colors.grey[900],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text('OR'),
+                    ),
+                    Container(
+                      width: 110,
+                      height: 1,
+                      color: Colors.grey[900],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 CustomButtomImage(
                   titel: 'Register With Google',
@@ -224,6 +259,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   onTap: () {
                     signInWithGoogle();
                   },
+                ),
+                const SizedBox(
+                  height: 50,
                 ),
               ],
             ),

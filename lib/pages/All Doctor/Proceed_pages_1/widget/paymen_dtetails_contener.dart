@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constant.dart';
+import '../../../../constant.dart';
 
 class PaymentDetailsContaner extends StatelessWidget {
   const PaymentDetailsContaner({

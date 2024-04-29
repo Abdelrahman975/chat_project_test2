@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../constant.dart';
 import '../Book_Now_pages/book_now_page.dart';
-import 'about_doctor_container.dart';
-import 'clinic_visit_container.dart';
-import 'custom_button_dcotor.dart';
-import 'doctor_details_contener.dart';
+import 'widget/about_doctor_container.dart';
+import 'widget/clinic_visit_container.dart';
+import 'widget/custom_button_dcotor.dart';
+import 'widget/doctor_details_contener.dart';
 
 class AbuotDoctorPage extends StatelessWidget {
   const AbuotDoctorPage({super.key});

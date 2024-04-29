@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constant.dart';
-import 'all_hospitals_pages.dart';
+import '../../../constant.dart';
+import '../all_hospitals_pages.dart';
 
 class ALLHospitalsContainer extends StatelessWidget {
   const ALLHospitalsContainer({

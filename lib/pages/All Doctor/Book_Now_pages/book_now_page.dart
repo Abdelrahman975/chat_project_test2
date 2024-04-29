@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../constant.dart';
-import '../../../widgets/custom_button.dart';
+import '../../Auth/widget/custom_button.dart';
 import '../Proceed_pages_1/proceed_page.dart';
-import '../about_doctor_pages/about_doctor_container.dart';
-import 'date_book_button.dart';
+import '../about_doctor_pages/widget/about_doctor_container.dart';
+import 'widget/date_book_button.dart';
 
 class Book_Now_page extends StatelessWidget {
   const Book_Now_page({super.key});

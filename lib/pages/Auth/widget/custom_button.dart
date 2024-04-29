@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../constant.dart';
+import '../../../constant.dart';
 
 // ignore: must_be_immutable
 class CustomButtom extends StatelessWidget {

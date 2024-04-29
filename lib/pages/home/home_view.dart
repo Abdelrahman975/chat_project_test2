@@ -1,4 +1,4 @@
-import 'package:chat_project_test2/pages/reminder_page.dart';
+import 'package:chat_project_test2/pages/Reminder/reminder_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,8 +6,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../constant.dart';
 import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
 import '../All_Hospitals/all_hospitals_pages.dart';
-import '../Profile/profilePage.dart';
-import '../login_page.dart';
+import '../Auth/Profile/profilePage.dart';
+import '../Auth/login_page.dart';
+import '../notifications_screen.dart';
 import 'home_page.dart';
 // import 'pages/reminder_page.dart';
 
@@ -56,7 +57,7 @@ class _HomeViewState extends State<HomeView> {
               ),
               color: Colors.black,
               onPressed: () {
-                Navigator.pushNamed(context, ReminderPage.id);
+                Navigator.pushNamed(context, Notifications.id);
                 // Handle notifications button press
               },
             ),

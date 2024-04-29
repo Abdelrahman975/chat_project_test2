@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constant.dart';
-import '../All Doctor/about_doctor_pages/about_doctor_page.dart';
+import '../../../constant.dart';
+import '../../All Doctor/about_doctor_pages/about_doctor_page.dart';
 
 class DoctorContinerImages extends StatelessWidget {
   const DoctorContinerImages({

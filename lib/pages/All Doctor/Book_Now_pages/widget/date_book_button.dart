@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../constant.dart';
-import '../All_Doctor_pages/all_doctors_list_views_builder.dart';
+import '../../../../constant.dart';
+import '../../All_Doctor_pages/all_doctors_list_views_builder.dart';
 
 // ignore: must_be_immutable
 class DateBook_Button extends StatelessWidget {

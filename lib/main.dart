@@ -11,9 +11,11 @@ import 'pages/All_Hospitals/all_hospitals_pages.dart';
 import 'pages/Reminder/reminder_page1.dart';
 import 'pages/animated_splash_page.dart';
 import 'pages/chat_page.dart';
-import 'pages/login_page.dart';
-import 'pages/register_page.dart';
-import 'pages/reminder_page.dart';
+import 'pages/Auth/login_page.dart';
+import 'pages/mri.dart';
+import 'pages/notifications_screen.dart';
+import 'pages/Auth/register_page.dart';
+import 'pages/Reminder/reminder_page.dart';
 import 'pages/home/home_view.dart';
 
 void main() async {
@@ -63,6 +65,10 @@ class _MyAppState extends State<MyApp> {
         ChatPage.id: (context) => ChatPage(),
 
         AllHospitalsPage.id: (context) => AllHospitalsPage(),
+
+        MRI_Page.id: (context) => MRI_Page(),
+
+        Notifications.id: (context) => Notifications(),
 
         AllDoctorsViewBuilder.id: (context) => AllDoctorsViewBuilder(),
         AbuotDoctorPage.id: (context) => AbuotDoctorPage(),

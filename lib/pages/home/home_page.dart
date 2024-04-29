@@ -1,11 +1,12 @@
 import 'package:chat_project_test2/models/services_category_model.dart';
-import 'package:chat_project_test2/pages/reminder_page.dart';
+import 'package:chat_project_test2/pages/Reminder/reminder_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant.dart';
-import '../../widgets/services_home_wedget.dart';
+import 'widget/services_home_wedget.dart';
 import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
 import '../Reminder/reminder_page1.dart';
+import '../mri.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -114,7 +115,7 @@ class HomePage extends StatelessWidget {
                       category: ServicesCategoryModel(
                           image: 'assets/images/Alzaheime MRI.png',
                           categoryName: 'Alzaheime MRI',
-                          categoryNamePage: ReminderPage.id),
+                          categoryNamePage: MRI_Page.id),
                     ),
                     const SizedBox(
                       width: 6,

@@ -1,14 +1,20 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../constant.dart';
+import '../../../constant.dart';
 
 // ignore: must_be_immutable
 class CustomFormTextField extends StatelessWidget {
   CustomFormTextField(
-      {this.hintText, this.onChanged, this.obscureText = false});
+      {this.hintText,
+      this.onChanged,
+      this.obscureText = false,
+      @required this.iconss});
   String? hintText;
   bool? obscureText;
+  Widget? iconss;
 
   TextEditingController textController = TextEditingController();
   Function(String)? onChanged;
@@ -25,6 +31,7 @@ class CustomFormTextField extends StatelessWidget {
       },
       onChanged: onChanged,
       decoration: InputDecoration(
+        suffixIcon: iconss,
         hintText: hintText,
         hintStyle: const TextStyle(
           color: Colors.grey,

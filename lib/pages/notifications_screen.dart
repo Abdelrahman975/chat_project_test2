@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Notifications extends StatelessWidget {
+  static String id = 'Notifications Page';
   const Notifications({super.key});
 
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/services_category_model.dart';
+import '../../../models/services_category_model.dart';
 
 class ServicesWidgets extends StatelessWidget {
   const ServicesWidgets({super.key, required this.category});
