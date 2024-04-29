@@ -31,8 +31,6 @@ class _MRI_PageState extends State<MRI_Page> {
   }
 
   Future<void> _processImage() async {
-    // hello
-    // hello
     // Simulating processing
     for (int i = 0; i <= 100; i++) {
       setState(() {
