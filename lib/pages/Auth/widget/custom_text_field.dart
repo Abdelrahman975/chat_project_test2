@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, use_key_in_widget_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,7 @@ class CustomFormTextField extends StatelessWidget {
       },
       onChanged: onChanged,
       decoration: InputDecoration(
+        label: Text(hintText!),
         suffixIcon: iconss,
         hintText: hintText,
         hintStyle: const TextStyle(

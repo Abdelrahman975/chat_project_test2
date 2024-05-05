@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,7 +28,7 @@ class CustomButtom extends StatelessWidget {
         child: Center(
           child: Text(
             titel,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               color: KprimaryColor,
               fontWeight: FontWeight.bold,
@@ -65,13 +67,13 @@ class CustomButtomImage extends StatelessWidget {
           children: [
             Text(
               titel,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: KprimaryColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Image.asset(

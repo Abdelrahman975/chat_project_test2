@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_super_parameters
+
 import 'package:flutter/material.dart';
 
 import '../models/news_model.dart';
@@ -23,8 +25,8 @@ class _NewsListTileState extends State<NewsListTile> {
       },
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.only(bottom: 20.0),
-        padding: EdgeInsets.all(12.0),
+        margin: const EdgeInsets.only(bottom: 20.0),
+        padding: const EdgeInsets.all(12.0),
         height: 130,
         decoration: BoxDecoration(
           color: Colors.black,
@@ -48,7 +50,7 @@ class _NewsListTileState extends State<NewsListTile> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10.0,
             ),
             Flexible(
@@ -59,15 +61,15 @@ class _NewsListTileState extends State<NewsListTile> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       widget.data.title!,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
                     Text(widget.data.content!,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white54,
                         ))
                   ],

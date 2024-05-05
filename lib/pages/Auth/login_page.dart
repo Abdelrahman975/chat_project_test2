@@ -1,3 +1,7 @@
+// ignore_for_file: missing_required_param, avoid_print, use_build_context_synchronously, prefer_const_constructors_in_immutables, unnecessary_nullable_for_final_variable_declarations
+
+import 'dart:async';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+        await googleUser.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -43,6 +47,58 @@ class _LoginPageState extends State<LoginPage> {
     await FirebaseAuth.instance.signInWithCredential(credential);
     Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email1);
     showSnackMassage(context, 'success');
+  }
+
+  Future loginfierbase() async {
+    if (formkey.currentState!.validate()) {
+      isLoading = true;
+      setState(() {});
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email1!, password: password1!);
+        showSnackMassage(context, 'success');
+        if (credential.user!.emailVerified) {
+          Navigator.of(context)
+              .pushReplacementNamed(HomeView.id, arguments: email1);
+        } else {
+          showSnackMassage(context, 'Verified your Email');
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.warning,
+            animType: AnimType.rightSlide,
+            title: 'Warning',
+            desc: 'Verified your Email',
+          ).show();
+        }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+          showSnackMassage(context, 'No user found for that email.');
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'No user found for that email.',
+          ).show();
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+          showSnackMassage(context, 'Wrong password provided for that user.');
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'Wrong password provided for that user.',
+          ).show();
+        }
+      } catch (e) {
+        print(e);
+        showSnackMassage(context, 'there was an error');
+      }
+      isLoading = false;
+      setState(() {});
+    } else {}
   }
 
   String? password1, email1;
@@ -97,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 CustomFormTextField(
                   iconss: IconButton(
-                    icon: Icon(Icons.remove_red_eye_rounded),
+                    icon: const Icon(Icons.remove_red_eye_rounded),
                     onPressed: () {},
                   ),
                   obscureText: true,
@@ -159,60 +215,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 CustomButtom(
-                  onTap: () async {
-                    if (formkey.currentState!.validate()) {
-                      isLoading = true;
-                      setState(() {});
-                      try {
-                        final credential = await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: email1!, password: password1!);
-                        showSnackMassage(context, 'success');
-                        if (credential.user!.emailVerified) {
-                          Navigator.of(context).pushReplacementNamed(
-                              HomeView.id,
-                              arguments: email1);
-                        } else {
-                          showSnackMassage(context, 'Verified your Email');
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.warning,
-                            animType: AnimType.rightSlide,
-                            title: 'Warning',
-                            desc: 'Verified your Email',
-                          ).show();
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          print('No user found for that email.');
-                          showSnackMassage(
-                              context, 'No user found for that email.');
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.error,
-                            animType: AnimType.rightSlide,
-                            title: 'Error',
-                            desc: 'No user found for that email.',
-                          ).show();
-                        } else if (e.code == 'wrong-password') {
-                          print('Wrong password provided for that user.');
-                          showSnackMassage(context,
-                              'Wrong password provided for that user.');
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.error,
-                            animType: AnimType.rightSlide,
-                            title: 'Error',
-                            desc: 'Wrong password provided for that user.',
-                          ).show();
-                        }
-                      } catch (e) {
-                        print(e);
-                        showSnackMassage(context, 'there was an error');
-                      }
-                      isLoading = false;
-                      setState(() {});
-                    } else {}
+                  onTap: () {
+                    loginfierbase();
                   },
                   titel: 'LogIn',
                 ),
@@ -256,8 +260,8 @@ class _LoginPageState extends State<LoginPage> {
                       height: 1,
                       color: Colors.grey[900],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text('OR'),
                     ),
                     Container(

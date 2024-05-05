@@ -114,6 +114,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ServicesWidgets(
                       category: ServicesCategoryModel(

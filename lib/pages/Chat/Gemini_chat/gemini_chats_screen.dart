@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member, unnecessary_import, depend_on_referenced_packages, avoid_print
+
 import "dart:convert";
 import "dart:io";
 
@@ -65,7 +67,7 @@ class _GeminiChatScreenState extends State<GeminiChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer_widget(),
+      drawer: const Drawer_widget(),
       appBar: AppBar(
         backgroundColor: KprimaryColor2,
         title: const Text("Gemini ChatBot"),
@@ -85,15 +87,15 @@ class _GeminiChatScreenState extends State<GeminiChatScreen> {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.only(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(
                               bottom: 10,
                               right: 15,
                               left: 15,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10),
                                 bottomLeft: Radius.circular(10),
@@ -102,7 +104,7 @@ class _GeminiChatScreenState extends State<GeminiChatScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Gemini",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -127,15 +129,15 @@ class _GeminiChatScreenState extends State<GeminiChatScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.only(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(
                               bottom: 10,
                               left: 15,
                               right: 15,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.blue[300],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10),
                                 bottomRight: Radius.circular(10),
@@ -144,7 +146,7 @@ class _GeminiChatScreenState extends State<GeminiChatScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(
+                                const Text(
                                   "Me",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -185,10 +187,10 @@ class _GeminiChatScreenState extends State<GeminiChatScreen> {
                         onPressed: () {
                           selectImage();
                         },
-                        icon: Icon(Icons.upload_file),
+                        icon: const Icon(Icons.upload_file),
                       ),
                       hintText: "Message",
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(30),
                         ),

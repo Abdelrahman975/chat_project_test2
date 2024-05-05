@@ -1,14 +1,12 @@
-import 'package:chat_project_test2/pages/Reminder/reminder_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: use_key_in_widget_constructors, prefer_final_fields, prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../constant.dart';
 import '../All Doctor/All_Doctor_pages/all_doctor_list_view.dart';
-import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
+
 import '../All_Hospitals/all_hospitals_pages.dart';
-import '../Auth/Profile/profilePage.dart';
-import '../Auth/login_page.dart';
+
 import '../notifications_screen.dart';
 import 'drawer/drawer_screen.dart';
 import 'home_page.dart';
@@ -83,7 +81,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       bottomNavigationBar: Container(
         height: 60,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: KprimaryColor2,
           borderRadius: BorderRadius.circular(10),

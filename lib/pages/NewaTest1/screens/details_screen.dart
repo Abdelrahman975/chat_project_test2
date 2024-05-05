@@ -1,5 +1,7 @@
 //now let's for the details screen
 
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import '../models/news_model.dart';
@@ -28,21 +30,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
           children: [
             Text(
               widget.data.title!,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 26.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8.0,
             ),
             Text(
               widget.data.author!,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black54,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             Hero(
@@ -52,7 +54,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Image.network(widget.data.urlToImage!),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             Text(widget.data.content!)

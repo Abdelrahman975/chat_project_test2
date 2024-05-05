@@ -1,3 +1,7 @@
+// ignore_for_file: missing_required_param, unnecessary_nullable_for_final_variable_declarations
+
+import 'dart:async';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+        await googleUser.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -49,10 +53,71 @@ class _RegisterPageState extends State<RegisterPage> {
     showSnackMassage(context, 'success');
   }
 
+  Future regesterfirebase() async {
+    if (formkey.currentState!.validate()) {
+      isLoading = true;
+      setState(() {});
+      try {
+        // ignore: unused_local_variable
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email!,
+          password: password!,
+        );
+
+        FirebaseFirestore.instance.collection('users').doc(email).set({
+          'email': email ?? 'noexist',
+          'password': password ?? 'not exist',
+          'name': user_name ?? 'not exist',
+          'phone': phone ?? 'not exist',
+        }, SetOptions(merge: true));
+        showSnackMassage(context, 'success');
+        FirebaseAuth.instance.currentUser!.sendEmailVerification();
+        Navigator.of(context)
+            .pushReplacementNamed(LoginPage.id, arguments: email);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+          showSnackMassage(context, 'The password provided is too weak.');
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'The password provided is too weak.',
+          ).show();
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+          showSnackMassage(
+              context, 'The account already exists for that email.');
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Error',
+            desc: 'The account already exists for that email.',
+          ).show();
+        }
+      } catch (e) {
+        print(e);
+        showSnackMassage(context, 'there was an error');
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.rightSlide,
+          title: 'Error',
+          desc: 'there was an error',
+        ).show();
+      }
+      isLoading = false;
+      setState(() {});
+    } else {}
+  }
+
   String? email;
   String? user_name;
   String? password;
-
+  String? phone;
   bool isLoading = false;
 
   @override
@@ -103,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 CustomFormTextField(
                   onChanged: (data) {
-                    user_name = data;
+                    phone = data;
                   },
                   hintText: 'Enter Phone Number',
                 ),
@@ -121,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 CustomFormTextField(
                   iconss: IconButton(
-                    icon: Icon(Icons.remove_red_eye_rounded),
+                    icon: const Icon(Icons.remove_red_eye_rounded),
                     onPressed: () {},
                   ),
                   obscureText: true,
@@ -134,68 +199,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 20,
                 ),
                 CustomButtom(
-                  onTap: () async {
-                    if (formkey.currentState!.validate()) {
-                      isLoading = true;
-                      setState(() {});
-                      try {
-                        // ignore: unused_local_variable
-                        final credential = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                          email: email!,
-                          password: password!,
-                        );
-
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(email)
-                            .set({
-                          'email': email ?? 'noexist',
-                          'password': password ?? 'not exist'
-                        }, SetOptions(merge: true));
-                        showSnackMassage(context, 'success');
-                        FirebaseAuth.instance.currentUser!
-                            .sendEmailVerification();
-                        Navigator.of(context).pushReplacementNamed(LoginPage.id,
-                            arguments: email);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
-                          print('The password provided is too weak.');
-                          showSnackMassage(
-                              context, 'The password provided is too weak.');
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.error,
-                            animType: AnimType.rightSlide,
-                            title: 'Error',
-                            desc: 'The password provided is too weak.',
-                          ).show();
-                        } else if (e.code == 'email-already-in-use') {
-                          print('The account already exists for that email.');
-                          showSnackMassage(context,
-                              'The account already exists for that email.');
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.error,
-                            animType: AnimType.rightSlide,
-                            title: 'Error',
-                            desc: 'The account already exists for that email.',
-                          ).show();
-                        }
-                      } catch (e) {
-                        print(e);
-                        showSnackMassage(context, 'there was an error');
-                        AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.error,
-                          animType: AnimType.rightSlide,
-                          title: 'Error',
-                          desc: 'there was an error',
-                        ).show();
-                      }
-                      isLoading = false;
-                      setState(() {});
-                    } else {}
+                  onTap: () {
+                    regesterfirebase();
                   },
                   titel: 'Register',
                 ),
@@ -239,8 +244,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 1,
                       color: Colors.grey[900],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Text('OR'),
                     ),
                     Container(
