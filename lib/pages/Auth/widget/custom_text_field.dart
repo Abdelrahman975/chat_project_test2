@@ -9,12 +9,14 @@ import '../../../constant.dart';
 
 // ignore: must_be_immutable
 class CustomFormTextField extends StatelessWidget {
-  CustomFormTextField(
-      {this.hintText,
-      this.onChanged,
-      this.obscureText = false,
-      @required this.iconss});
-  String? hintText;
+  CustomFormTextField({
+    this.hintText,
+    this.onChanged,
+    this.obscureText = false,
+    @required this.iconss,
+    @required this.initialValue,
+  });
+  String? hintText, initialValue;
   bool? obscureText;
   Widget? iconss;
 
@@ -35,7 +37,7 @@ class CustomFormTextField extends StatelessWidget {
       decoration: InputDecoration(
         label: Text(hintText!),
         suffixIcon: iconss,
-        hintText: hintText,
+        hintText: initialValue,
         hintStyle: const TextStyle(
           color: Colors.grey,
         ),

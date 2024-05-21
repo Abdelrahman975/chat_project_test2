@@ -1,4 +1,5 @@
 import 'package:chat_project_test2/models/services_category_model.dart';
+import 'package:chat_project_test2/pages/Remider_test/reminder_page.dart';
 
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ import '../NewaTest1/screens/News_page.dart';
 
 import 'widget/services_home_wedget.dart';
 import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
-import '../Reminder/reminder_page1.dart';
+// import '../Reminder_Notifcations/reminder_page1.dart';
 import '../mri.dart';
 
 class HomePage extends StatelessWidget {
@@ -100,7 +101,7 @@ class HomePage extends StatelessWidget {
                       category: ServicesCategoryModel(
                           image: 'assets/images/Reminder.png',
                           categoryName: 'Reminder',
-                          categoryNamePage: Reminder_page1.id),
+                          categoryNamePage: ReminderPageTest.id),
                     ),
                     const SizedBox(
                       width: 6,

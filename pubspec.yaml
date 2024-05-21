@@ -55,8 +55,24 @@ dependencies:
 
   carousel_slider: ^4.2.1
   intl: ^0.19.0
-  flutter_local_notifications: ^17.1.0
+
+  timezone: 
+  flutter_timezone: 
+  workmanager: 
   permission_handler: ^11.3.1
+
+  sizer: 
+  google_fonts: ^6.1.0
+  flutter_svg:
+  rxdart:
+  provider:
+  shared_preferences:
+  flare_flutter:
+  flutter_local_notifications:
+
+  
+
+  
 
 
 
@@ -93,6 +109,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - assets/sound/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,5 +1,8 @@
 // ignore_for_file: missing_required_param, non_constant_identifier_names, prefer_const_constructors_in_immutables, file_names
 
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:chat_project_test2/pages/Auth/model/user_detals.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -7,6 +10,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../../constant.dart';
 
 import '../../notifications_screen.dart';
+// import '../services/authFirebaseMesthodes.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_text_field.dart';
 
@@ -17,17 +21,36 @@ class ProfilePage extends StatefulWidget {
   static String id = 'Profile Page';
 
   @override
-  State<ProfilePage> createState() => _RegisterPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _RegisterPageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> {
   GlobalKey<FormState> formkey = GlobalKey();
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
+  // UserModel? userData;
 
   String? email;
   String? user_name;
   String? password;
 
   bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    setState(() {
+      isLoading = true;
+    });
+    // userData = await AuthMethods().getUserData();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,15 +117,17 @@ class _RegisterPageState extends State<ProfilePage> {
                   height: 15,
                 ),
                 CustomFormTextField(
+                  initialValue: 'User Name',
                   onChanged: (data) {
                     user_name = data;
                   },
-                  hintText: ' User Name',
+                  hintText: currentUser.displayName,
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 CustomFormTextField(
+                  initialValue: 'userData?.phone,',
                   onChanged: (data) {
                     user_name = data;
                   },
@@ -112,6 +137,7 @@ class _RegisterPageState extends State<ProfilePage> {
                   height: 15,
                 ),
                 CustomFormTextField(
+                  initialValue: 'userData?.email,',
                   onChanged: (data) {
                     email = data;
                   },

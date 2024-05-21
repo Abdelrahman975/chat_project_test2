@@ -5,11 +5,12 @@ import 'dart:async';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../constant.dart';
 import '../../helper/show_snack_bar.dart';
+import 'services/authFirebaseMesthodes.dart';
 import 'widget/custom_button.dart';
 import 'widget/custom_text_field.dart';
 import 'register_page.dart';
@@ -25,29 +26,30 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formkey = GlobalKey();
-  Future signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final AuthMethods _authMethods = AuthMethods();
+  // Future signInWithGoogle() async {
+  //   // Trigger the authentication flow
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    if (googleUser == null) {
-      return; //====================
-    }
+  //   if (googleUser == null) {
+  //     return; //====================
+  //   }
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser.authentication;
+  //   // Obtain the auth details from the request
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser.authentication;
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+  //   // Create a new credential
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth?.accessToken,
+  //     idToken: googleAuth?.idToken,
+  //   );
 
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email1);
-    showSnackMassage(context, 'success');
-  }
+  //   // Once signed in, return the UserCredential
+  //   await FirebaseAuth.instance.signInWithCredential(credential);
+  //   Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email1);
+  //   showSnackMassage(context, 'success');
+  // }
 
   Future loginfierbase() async {
     if (formkey.currentState!.validate()) {
@@ -104,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
   String? password1, email1;
 
   bool isLoading = false;
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -153,10 +156,17 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 CustomFormTextField(
                   iconss: IconButton(
-                    icon: const Icon(Icons.remove_red_eye_rounded),
-                    onPressed: () {},
+                    icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
                   ),
-                  obscureText: true,
+                  obscureText: _isObscure,
                   onChanged: (data) {
                     password1 = data;
                   },
@@ -277,8 +287,13 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButtomImage(
                   titel: 'Login With Google',
                   Imgaess: 'assets/images/Google__G__logo.svg.png',
-                  onTap: () {
-                    signInWithGoogle();
+                  onTap: () async {
+                    bool result = await _authMethods.signInWithGoogle();
+                    if (result) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeView.id, arguments: email1);
+                      showSnackMassage(context, 'success');
+                    }
                   },
                 ),
               ],

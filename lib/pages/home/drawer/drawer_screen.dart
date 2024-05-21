@@ -9,17 +9,25 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../constant.dart';
 import '../../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
-import '../../Auth/Profile/profilePage.dart';
+import '../../Auth/Profile/porfileTastPage.dart';
+// import '../../Auth/Profile/profilePage.dart';
 import '../../Auth/login_page.dart';
 import '../../Chat/Chat_AI_Genret/AI_chatbot.dart';
 import '../../Chat/Gemini_chat/gemini_chats_screen.dart';
 import '../../NewaTest1/screens/News_page.dart';
-import '../../Reminder/reminder_page1.dart';
+import '../../Reminder_Notifcations/reminder_page1.dart';
 import '../../mri.dart';
 import '../home_view.dart';
 
-class Drawer_widget extends StatelessWidget {
+class Drawer_widget extends StatefulWidget {
   const Drawer_widget({super.key});
+
+  @override
+  State<Drawer_widget> createState() => _Drawer_widgetState();
+}
+
+class _Drawer_widgetState extends State<Drawer_widget> {
+  final currantUser = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +48,8 @@ class Drawer_widget extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.pop(context);
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ProfilePage()));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ProfileTastPage()));
           },
           child: Container(
             width: double.maxFinite,
@@ -74,14 +82,14 @@ class Drawer_widget extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  'Abdo Mansour',
+                  currantUser.displayName!,
                   style: TextStyle(
                       fontSize: 28,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'abdo123@gmail.com',
+                  currantUser.email!,
                   style: TextStyle(fontSize: 14, color: Colors.black),
                 ),
               ],
@@ -89,6 +97,7 @@ class Drawer_widget extends StatelessWidget {
           ),
         ),
       );
+
   Widget buildMenuItems(BuildContext context) => Container(
         color: KprimaryColor,
         padding: EdgeInsets.all(20),

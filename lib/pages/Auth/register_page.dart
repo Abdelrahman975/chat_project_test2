@@ -1,4 +1,4 @@
-// ignore_for_file: missing_required_param, unnecessary_nullable_for_final_variable_declarations
+// ignore_for_file: missing_required_param, unnecessary_nullable_for_final_variable_declarations, use_build_context_synchronously, avoid_print, non_constant_identifier_names, prefer_const_constructors_in_immutables
 
 import 'dart:async';
 
@@ -6,12 +6,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../constant.dart';
 import '../../helper/show_snack_bar.dart';
+import 'services/authFirebaseMesthodes.dart';
 import 'widget/custom_button.dart';
 import 'widget/custom_text_field.dart';
 import '../home/home_view.dart';
@@ -29,29 +29,32 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   GlobalKey<FormState> formkey = GlobalKey();
-  Future signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    if (googleUser == null) {
-      return; //====================
-    }
+  final AuthMethods _authMethods = AuthMethods();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser.authentication;
+  // Future signInWithGoogle() async {
+  //   // Trigger the authentication flow
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+  //   if (googleUser == null) {
+  //     return; //====================
+  //   }
 
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email);
-    showSnackMassage(context, 'success');
-  }
+  //   // Obtain the auth details from the request
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser.authentication;
+
+  //   // Create a new credential
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth?.accessToken,
+  //     idToken: googleAuth?.idToken,
+  //   );
+
+  //   // Once signed in, return the UserCredential
+  //   await FirebaseAuth.instance.signInWithCredential(credential);
+  //   Navigator.of(context).pushReplacementNamed(HomeView.id, arguments: email);
+  //   showSnackMassage(context, 'success');
+  // }
 
   Future regesterfirebase() async {
     if (formkey.currentState!.validate()) {
@@ -261,8 +264,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 CustomButtomImage(
                   titel: 'Register With Google',
                   Imgaess: 'assets/images/Google__G__logo.svg.png',
-                  onTap: () {
-                    signInWithGoogle();
+                  onTap: () async {
+                    bool result = await _authMethods.signInWithGoogle();
+                    if (result) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeView.id, arguments: email);
+                      showSnackMassage(context, 'success');
+                    }
                   },
                 ),
                 const SizedBox(
