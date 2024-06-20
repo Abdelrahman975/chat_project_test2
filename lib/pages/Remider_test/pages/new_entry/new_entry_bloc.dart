@@ -52,4 +52,6 @@ class NewEntryBloc {
       _selectedMedicineType$!.add(type);
     }
   }
+
+  void updateSelectedTime(String string) {}
 }

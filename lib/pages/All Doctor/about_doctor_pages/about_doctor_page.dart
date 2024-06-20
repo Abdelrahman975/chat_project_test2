@@ -7,8 +7,22 @@ import 'widget/clinic_visit_container.dart';
 import 'widget/custom_button_dcotor.dart';
 import 'widget/doctor_details_contener.dart';
 
+// ignore: must_be_immutable
 class AbuotDoctorPage extends StatelessWidget {
-  const AbuotDoctorPage({super.key});
+  AbuotDoctorPage({
+    super.key,
+  });
+  Map doctorMap = {};
+  late String doctorName = doctorMap['name'];
+  late String doctorImage = doctorMap['Image'];
+  late String doctorCity = doctorMap['city'];
+  late int doctorExper = doctorMap['experience'];
+  late int doctorCost = doctorMap['cost'];
+  late String doctorPosition = doctorMap['position'];
+  late String doctorQualific = doctorMap['qualification'];
+  late String doctorHospitalWork = doctorMap['hospital'];
+  late String doctordescription = doctorMap['description'];
+
   static String id = 'About Doctor page';
 
   @override

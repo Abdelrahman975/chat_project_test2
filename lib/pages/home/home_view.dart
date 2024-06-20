@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_final_fields, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant.dart';
@@ -25,10 +26,14 @@ class _HomeViewState extends State<HomeView> {
 
   List<Widget> pages = [
     const HomePage(),
-    const AllDactor_listview(),
+    AllDactor_listview(),
     const AllHospitalsPage(),
     // const ProfilePage(),
   ];
+
+  /*String timeStatus (){
+    if(DateTime.now().hour>){ return '';}
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +53,8 @@ class _HomeViewState extends State<HomeView> {
         // ),
         title: Row(
           children: [
-            const Text(
-              'Hi , Abdo',
+            Text(
+              'Hi, ${FirebaseAuth.instance.currentUser!.displayName}',
               style: TextStyle(color: Colors.black),
             ),
             const Spacer(), // Adds space between title and buttons

@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../constant.dart';
 
+// ignore: must_be_immutable
 class AboutDoctorContainer extends StatelessWidget {
-  const AboutDoctorContainer({
+  AboutDoctorContainer({
     super.key,
   });
+  Map doctorMap = {};
+  late String doctorName = doctorMap['name'];
+  late String doctorImage = doctorMap['Image'];
+  late String doctorCity = doctorMap['city'];
+  late int doctorExper = doctorMap['experience'];
+  late int doctorCost = doctorMap['cost'];
+  late String doctorPosition = doctorMap['position'];
+  late String doctorQualific = doctorMap['qualification'];
+  late String doctorHospitalWork = doctorMap['hospital'];
+  late String doctordescription = doctorMap['description'];
 
   @override
   Widget build(BuildContext context) {

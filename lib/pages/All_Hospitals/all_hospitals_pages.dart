@@ -1,7 +1,7 @@
+import 'package:chat_project_test2/pages/All_Hospitals/widget/button_move.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant.dart';
-import '../All Doctor/Book_Now_pages/widget/date_book_button.dart';
 import 'widget/about_hospital_detalisl.dart';
 import 'widget/abuot_hospital_images.dart';
 import 'widget/all_hospitals_container.dart';
@@ -59,7 +59,7 @@ class AllHospitalsPage extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          DateBook_Button(
+          button_move(
             titel: 'Show More Doctors',
           ),
           SizedBox(

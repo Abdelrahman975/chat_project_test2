@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable, use_key_in_widget_constructors, non_constant_identifier_names, prefer_const_constructors, unnecessary_import, camel_case_types, use_build_context_synchronously
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:chat_project_test2/pages/Chat/chat_test_ai/chat_screen.dart';
+import 'package:chat_project_test2/pages/Remider_test/reminder_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +14,9 @@ import '../../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
 import '../../Auth/Profile/porfileTastPage.dart';
 // import '../../Auth/Profile/profilePage.dart';
 import '../../Auth/login_page.dart';
-import '../../Chat/Chat_AI_Genret/AI_chatbot.dart';
 import '../../Chat/Gemini_chat/gemini_chats_screen.dart';
 import '../../NewaTest1/screens/News_page.dart';
-import '../../Reminder_Notifcations/reminder_page1.dart';
-import '../../mri.dart';
+import '../../MRI/mri.dart';
 import '../home_view.dart';
 
 class Drawer_widget extends StatefulWidget {
@@ -28,6 +28,11 @@ class Drawer_widget extends StatefulWidget {
 
 class _Drawer_widgetState extends State<Drawer_widget> {
   final currantUser = FirebaseAuth.instance.currentUser!;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +141,7 @@ class _Drawer_widgetState extends State<Drawer_widget> {
             ListTileDrawer(
               Image: "assets/images/AI_Chatbot.png",
               NameTitle: 'AI CHATBOT',
-              PageNavigator: Ai_ChatBot.id,
+              PageNavigator: ChatAiTest.id,
             ),
             ListTileDrawer(
               Image: "assets/images/icons8-brain-64.png",
@@ -151,7 +156,7 @@ class _Drawer_widgetState extends State<Drawer_widget> {
             ListTileDrawer(
               Image: "assets/images/icons8-reminder-50.png",
               NameTitle: 'Reminder',
-              PageNavigator: Reminder_page1.id,
+              PageNavigator: ReminderPageTest.id,
             ),
             ListTileDrawer(
               Image: "assets/images/icons8-nurse-50.png",

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-import '../../constant.dart';
-import '../home/drawer/drawer_screen.dart';
+import '../../../constant.dart';
+import '../../home/drawer/drawer_screen.dart';
 
 class Reminder_page1 extends StatelessWidget {
   const Reminder_page1({super.key});

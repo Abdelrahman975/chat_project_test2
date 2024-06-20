@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart' as tz;
 import '../../../home/home_page.dart';
 import '../../common/convert_time.dart';
 import '../../constants.dart';
@@ -236,7 +237,7 @@ class _NewEntryPageState extends State<NewEntryPage> {
                       globalBloc.updateMedicineList(newEntryMedicine);
 
                       // schedule notification
-                      // scheduleNotification(newEntryMedicine);
+                      scheduleNotification(newEntryMedicine);
 
                       Navigator.push(
                           context,
@@ -316,43 +317,66 @@ class _NewEntryPageState extends State<NewEntryPage> {
         context, MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
-  // Future<void> scheduleNotification(Medicine medicine) async {
-  //   var hour = int.parse(medicine.startTime![0] + medicine.startTime![1]);
-  //   var minute = int.parse(medicine.startTime![2] + medicine.startTime![3]);
+  Future<void> scheduleNotification(Medicine medicine) async {
+    // Parsing the hour and minute from the startTime
+    var hour = int.parse(medicine.startTime!.substring(0, 2));
+    var minute = int.parse(medicine.startTime!.substring(2, 4));
 
-  //   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-  //     'repeatDailyAtTime channel id',
-  //     'repeatDailyAtTime channel name',
-  //     importance: Importance.max,
-  //     ledColor: kOtherColor,
-  //     ledOffMs: 1000,
-  //     ledOnMs: 1000,
-  //     enableLights: true,
-  //   );
+    // Define Android specific notification details
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+      'repeatDailyAtTime_channel_id',
+      'repeatDailyAtTime_channel_name',
+      channelDescription: 'This channel is used for daily notifications',
+      importance: Importance.max,
+      ledColor: kOtherColor,
+      ledOffMs: 1000,
+      ledOnMs: 1000,
+      enableLights: true,
+    );
 
-  //   // var iOSPlatformChannelSpecifics = const initializationSettingsIOS();
+    // Define iOS specific notification details
+    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
 
-  //   var platformChannelSpecifics = NotificationDetails(
-  //     android: androidPlatformChannelSpecifics,
-  //     // iOS: iOSPlatformChannelSpecifics,
-  //   );
+    // Combine platform-specific notification details
+    var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
 
-  //   var scheduleDetails = RepeatInterval.daily;
+    for (int i = 0; i < (24 / medicine.interval!).floor(); i++) {
+      if (hour + (medicine.interval! * i) > 23) {
+        hour = hour + (medicine.interval! * i) - 24;
+      } else {
+        hour = hour + (medicine.interval! * i);
+      }
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        int.parse(medicine.notificationIDs![0]),
+        'Reminder: ${medicine.medicineName}',
+        medicine.medicineType != MedicineType.None
+            ? 'It is time to take your ${medicine.medicineType!.toLowerCase()}, according to schedule'
+            : 'It is time to take your medicine, according to schedule',
+        _nextInstanceOfTime(hour, minute),
+        platformChannelSpecifics,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    }
 
-  //   await flutterLocalNotificationsPlugin.periodicallyShow(
-  //     int.parse(medicine.notificationIDs![0]),
-  //     'Reminder: ${medicine.medicineName}',
-  //     medicine.medicineType.toString() != MedicineType.None.toString()
-  //         ? 'It is time to take your ${medicine.medicineType!.toLowerCase()}, according to schedule'
-  //         : 'It is time to take your medicine, according to schedule',
-  //     // Time(hour, minute, 0),
-  //     // platformChannelSpecifics,
-  //     RepeatInterval.daily,
-  //     platformChannelSpecifics,
-  //     // scheduleDetails,
-  //     androidAllowWhileIdle: true,
-  //   );
-  // }
+    // Schedule the notification to repeat daily at the specified time
+  }
+
+// Function to calculate the next instance of the specified time
+  tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
 }
 
 class SelectTime extends StatefulWidget {
