@@ -51,7 +51,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
               tag: "${widget.data.title}",
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30.0),
-                child: Image.network(widget.data.urlToImage!),
+                child: Image.network(
+                  widget.data.urlToImage ??
+                      'https://static.independent.co.uk/2023/12/19/16/Hero_3_2%20image.png?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp',
+                ),
               ),
             ),
             const SizedBox(

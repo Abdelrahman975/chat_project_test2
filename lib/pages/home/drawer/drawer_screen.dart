@@ -1,6 +1,11 @@
 // ignore_for_file: must_be_immutable, use_key_in_widget_constructors, non_constant_identifier_names, prefer_const_constructors, unnecessary_import, camel_case_types, use_build_context_synchronously
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:chat_project_test2/pages/Auth/Profile/porfileTastPage.dart';
+// import 'package:chat_project_test2/pages/Auth/Profile/profilePage.dart';
+import 'package:chat_project_test2/pages/Chat/chat_test_ai/chat_screen.dart';
+import 'package:chat_project_test2/pages/Remider_test/reminder_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +14,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../constant.dart';
 import '../../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
-import '../../Auth/Profile/porfileTastPage.dart';
-// import '../../Auth/Profile/profilePage.dart';
+
 import '../../Auth/login_page.dart';
-import '../../Chat/Chat_AI_Genret/AI_chatbot.dart';
 import '../../Chat/Gemini_chat/gemini_chats_screen.dart';
 import '../../NewaTest1/screens/News_page.dart';
-import '../../Reminder_Notifcations/reminder_page1.dart';
-import '../../mri.dart';
+import '../../MRI/mri.dart';
 import '../home_view.dart';
 
 class Drawer_widget extends StatefulWidget {
@@ -27,7 +29,27 @@ class Drawer_widget extends StatefulWidget {
 }
 
 class _Drawer_widgetState extends State<Drawer_widget> {
-  final currantUser = FirebaseAuth.instance.currentUser!;
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  final usersCollection = FirebaseFirestore.instance.collection('users');
+
+  String? imageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserImage();
+  }
+
+  Future<void> _loadUserImage() async {
+    DocumentSnapshot userDoc =
+        await usersCollection.doc(currentUser.email).get();
+    if (userDoc.exists && userDoc.data() != null) {
+      Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+      setState(() {
+        imageUrl = userData['imageUrl'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,21 +82,18 @@ class _Drawer_widgetState extends State<Drawer_widget> {
                 Stack(
                   children: [
                     CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage('assets/images/person1.png'),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: KprimaryColor2,
-                            borderRadius: BorderRadius.circular(40)),
-                        child: Icon(
-                          Icons.settings,
-                          size: 24, // adjust the size as needed
-                        ),
-                      ),
+                      radius: 81,
+                      backgroundColor: Colors.grey[200],
+                      child: imageUrl == null
+                          ? const CircularProgressIndicator()
+                          : CircleAvatar(
+                              radius: 80,
+                              backgroundImage: imageUrl != null
+                                  ? NetworkImage(imageUrl!)
+                                  : const AssetImage(
+                                          'assets/images/person1.png')
+                                      as ImageProvider,
+                            ),
                     ),
                   ],
                 ),
@@ -82,14 +101,14 @@ class _Drawer_widgetState extends State<Drawer_widget> {
                   height: 12,
                 ),
                 Text(
-                  currantUser.displayName!,
+                  currentUser.displayName!,
                   style: TextStyle(
                       fontSize: 28,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  currantUser.email!,
+                  currentUser.email!,
                   style: TextStyle(fontSize: 14, color: Colors.black),
                 ),
               ],
@@ -136,11 +155,11 @@ class _Drawer_widgetState extends State<Drawer_widget> {
             ListTileDrawer(
               Image: "assets/images/AI_Chatbot.png",
               NameTitle: 'AI CHATBOT',
-              PageNavigator: Ai_ChatBot.id,
+              PageNavigator: ChatAiTest.id,
             ),
             ListTileDrawer(
               Image: "assets/images/icons8-brain-64.png",
-              NameTitle: 'Alzaheimer MRI',
+              NameTitle: 'Alzheimer MRI',
               PageNavigator: MRI_Page.id,
             ),
             ListTileDrawer(
@@ -151,7 +170,7 @@ class _Drawer_widgetState extends State<Drawer_widget> {
             ListTileDrawer(
               Image: "assets/images/icons8-reminder-50.png",
               NameTitle: 'Reminder',
-              PageNavigator: Reminder_page1.id,
+              PageNavigator: ReminderPageTest.id,
             ),
             ListTileDrawer(
               Image: "assets/images/icons8-nurse-50.png",
@@ -161,7 +180,7 @@ class _Drawer_widgetState extends State<Drawer_widget> {
             ListTileDrawer(
               Image: "assets/images/icons8-news-50.png",
               NameTitle: 'News',
-              PageNavigator: News_page.id,
+              PageNavigator: NewsPage.id,
             ),
             Divider(
               color: Colors.grey[300],
@@ -227,34 +246,3 @@ class ListTileDrawer extends StatelessWidget {
     );
   }
 }
-
-
-// ListTile(
-//               horizontalTitleGap: 12,
-//               leading: CircleAvatar(
-//                 backgroundColor: KprimaryColor,
-//                 radius: 13,
-//                 backgroundImage:
-//                     AssetImage('assets/images/icons8-reminder-50.png'),
-//               ),
-//               title: Text('Reminder'),
-//               onTap: () {
-//                 Navigator.pop(context);
-//                 Navigator.of(context).push(
-//                     MaterialPageRoute(builder: (context) => Reminder_page1()));
-//               },
-//             ),
-
-
-
-
-
-
-// {
-                
-//                 GoogleSignIn googleSignIn = GoogleSignIn();
-//                 googleSignIn.disconnect();
-//                 await FirebaseAuth.instance.signOut();
-//                 Navigator.of(context)
-//                     .pushNamedAndRemoveUntil(LoginPage.id, (route) => false);
-//               },

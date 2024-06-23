@@ -1,13 +1,13 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-
 import '../models/news_model.dart';
 import '../screens/details_screen.dart';
 
 class BreakingNewsCard extends StatefulWidget {
   BreakingNewsCard(this.data, {Key? key}) : super(key: key);
-  NewsData data;
+  final NewsData data;
+
   @override
   State<BreakingNewsCard> createState() => _BreakingNewsCardState();
 }
@@ -18,18 +18,20 @@ class _BreakingNewsCardState extends State<BreakingNewsCard> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailsScreen(widget.data),
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailsScreen(widget.data),
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(25.0),
           image: DecorationImage(
             fit: BoxFit.fill,
             image: NetworkImage(
-              widget.data.urlToImage!,
+              widget.data.urlToImage ??
+                  'https://static.independent.co.uk/2023/12/19/16/Hero_3_2%20image.png?quality=75&width=640&crop=3%3A2%2Csmart&auto=webp',
             ),
           ),
         ),
@@ -47,27 +49,33 @@ class _BreakingNewsCardState extends State<BreakingNewsCard> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.data.title!,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Flexible(
+                child: Text(
+                  widget.data.title ?? 'No Title',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 8.0,
               ),
-              Text(
-                widget.data.author!,
-                style: const TextStyle(
-                  color: Colors.white54,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
+              Flexible(
+                child: Text(
+                  widget.data.author ?? 'No Author',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white54,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),

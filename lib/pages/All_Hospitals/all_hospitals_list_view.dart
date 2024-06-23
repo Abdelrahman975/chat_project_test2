@@ -1,24 +1,28 @@
+import 'package:chat_project_test2/pages/All_Hospitals/widget/all_hospitals_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'widget/All_doctor_container.dart';
-
-class AllDactor_listview extends StatefulWidget {
-  AllDactor_listview({
+class AllHospitals_listview extends StatefulWidget {
+  AllHospitals_listview({
     super.key,
   });
 
   @override
-  State<AllDactor_listview> createState() => _AllDactor_listviewState();
+  State<AllHospitals_listview> createState() => _AllHospitals_listviewState();
 }
 
-class _AllDactor_listviewState extends State<AllDactor_listview> {
-  List doctorsList = [];
+class _AllHospitals_listviewState extends State<AllHospitals_listview> {
+  List hospitalsList = [];
+
+  // ignore: unused_field
   bool _isLoading = true; // Add a loading state variable
   getDoctorsData() async {
-    var result = await FirebaseFirestore.instance.collection('doctors').get();
+    var result = await FirebaseFirestore.instance.collection('hospitals').get();
     setState(() {
-      doctorsList = result.docs.map((doc) {
+      if (mounted) {
+        setstate() {}
+      }
+      hospitalsList = result.docs.map((doc) {
         final data = doc.data();
         data['id'] = doc.id;
         return data;
@@ -38,11 +42,12 @@ class _AllDactor_listviewState extends State<AllDactor_listview> {
     return _isLoading
         ? Center(child: CircularProgressIndicator()) // Show loading indicator
         : ListView.builder(
-            itemCount: doctorsList.length,
+            itemCount: hospitalsList.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                child: DoctorContainer(doctorMap: doctorsList[index]),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: ALLHospitalsContainer(hospitalMap: hospitalsList[index]),
               );
             },
           );

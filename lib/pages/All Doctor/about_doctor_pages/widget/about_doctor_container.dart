@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../../../constant.dart';
 
+// ignore: must_be_immutable
 class AboutDoctorContainer extends StatelessWidget {
-  const AboutDoctorContainer({
+  AboutDoctorContainer({
     super.key,
+    required this.doctorMap,
   });
+  Map doctorMap = {};
+  late String doctorName = doctorMap['name'] ?? '';
+  late String doctorImage = doctorMap['Image'] ??
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmWru8q17zpOzzzT1s475ZS_8fOL1GS0teSw&s';
+  late String doctorCity = doctorMap['city'] ?? '';
+  late int doctorExper = doctorMap['experience'] ?? 0;
+  late String doctorPosition = doctorMap['position'] ?? '';
+  late String doctorQualific = doctorMap['qualification'] ?? '';
+  late String doctorHospitalWork = doctorMap['hospital'] ?? '';
+  late String doctordescription = doctorMap['description'] ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +28,7 @@ class AboutDoctorContainer extends StatelessWidget {
           color: KprimaryColor4,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        height: 180,
+        height: 200,
         width: 370,
         child: Padding(
           padding: const EdgeInsets.all(6.0),
@@ -25,7 +37,10 @@ class AboutDoctorContainer extends StatelessWidget {
               ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.network(
-                    'https://www.vaidam.com/sites/default/files/dr._nasser_1-min.jpg',
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.error);
+                    },
+                    doctorImage,
                     height: 150,
                     width: 120,
                     fit: BoxFit.cover,
@@ -36,39 +51,27 @@ class AboutDoctorContainer extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 190,
                     child: Text(
-                      'Dr Denies Martine.......................................',
-                      maxLines: 1,
+                      doctorName,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 15,
                         color: KprimaryColor3,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 190,
                     child: Text(
-                      'Graduation FRCP.......................................',
+                      doctorQualific,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 20,
-                        color: KprimaryColor3,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 170,
-                    child: Text(
-                      'Director.........................................',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         color: KprimaryColor3,
                       ),
                     ),
@@ -76,12 +79,37 @@ class AboutDoctorContainer extends StatelessWidget {
                   SizedBox(
                     width: 170,
                     child: Text(
-                      '28 yers Ex.............................................',
+                      doctorPosition,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 12,
+                        color: KprimaryColor3,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                      '$doctorExper yers Experience',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
                         color: Colors.grey[400],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                      doctorHospitalWork,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: KprimaryColor3,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -96,7 +124,7 @@ class AboutDoctorContainer extends StatelessWidget {
                       SizedBox(
                         width: 190,
                         child: Text(
-                          'BEHMAN ................................................',
+                          doctorCity,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

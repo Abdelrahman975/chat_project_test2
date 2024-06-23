@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../../../constant.dart';
 
+// ignore: must_be_immutable
 class Clinic_Visit_Container extends StatelessWidget {
-  const Clinic_Visit_Container({
+  Clinic_Visit_Container({
     super.key,
+    required this.doctorAdress,
+    required this.doctorCost,
   });
+  late int doctorCost = 20;
+  late String doctorAdress = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class Clinic_Visit_Container extends StatelessWidget {
                 height: 50,
                 width: 400,
                 padding: EdgeInsets.symmetric(horizontal: 15),
-                child: const Row(
+                child: Row(
                   children: [
                     Text(
                       'Clinic Visit',
@@ -48,7 +53,7 @@ class Clinic_Visit_Container extends StatelessWidget {
                       flex: 1,
                     ),
                     Text(
-                      'Consulting Fee : 500',
+                      'Consulting Fee : $doctorCost',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
@@ -73,7 +78,7 @@ class Clinic_Visit_Container extends StatelessWidget {
                   height: 50,
                   width: 250,
                   child: Text(
-                    'Serum clinic ,Rose dam , Near Police Station, Cairo ',
+                    doctorAdress,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:chat_project_test2/pages/home/drawer/drawer_screen.dart';
@@ -19,21 +17,20 @@ class _MRI_Page2State extends State<MRI_Page> {
   File? _imageFile;
   double _progress = 0.0;
   List<Map<String, dynamic>> listdata = [];
+  bool _isUploading = false;
 
+  // API endpoint URL
   var url =
       'https://alzheimer-s-detection-with-streamlit.onrender.com//predict';
-  Future<void> _getImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: source);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
-      }
-    });
-  }
+  // Function to get image from camera or gallery
 
+  // Function to upload image to the server and get response
   Future<void> upload() async {
+    setState(() {
+      _isUploading = true;
+    });
+
     var request = http.MultipartRequest("POST", Uri.parse(url));
     final header = {"Content-Type": "multipart/form-data"};
     request.files.add(http.MultipartFile(
@@ -48,10 +45,8 @@ class _MRI_Page2State extends State<MRI_Page> {
       setState(() {
         listdata = List<Map<String, dynamic>>.from(jsonDecode(res.body));
         if (listdata.isNotEmpty) {
-          // Update _progress if the second item has a double value
-          if (listdata.length > 1 && listdata[1].values.first is double) {
-            _progress = listdata[1].values.first;
-          }
+          _progress = listdata[0]['probability'];
+          print(_progress);
         }
       });
       print("response here: $listdata");
@@ -63,17 +58,32 @@ class _MRI_Page2State extends State<MRI_Page> {
     } else {
       print("Error ${myRequest.statusCode}");
     }
+
+    setState(() {
+      _isUploading = false;
+    });
   }
 
-  Future<void> _processImage() async {
-    // Simulating processing
-    for (int i = 0; i <= 100; i++) {
-      setState(() {
-        _progress = i / 100;
-      });
-      await Future.delayed(const Duration(milliseconds: 50));
-    }
+  Future<void> _getImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+      }
+    });
   }
+  // Updated function to process the image and simulate progress
+  // Future<double> _processImage() async {
+  //   // The progress is updated with the value from the API response
+  //   setState(() {
+  //     if (listdata.length > 1 && listdata[1].values.first is double) {
+  //       _progress = listdata[1].values.first;
+  //     }
+  //   });
+  //   return _progress;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +133,7 @@ class _MRI_Page2State extends State<MRI_Page> {
                       child: const Text(
                         'Select Image ',
                         style: TextStyle(
-                          color: Color(0xfffffffff),
+                          color: Color.fromARGB(255, 13, 0, 0),
                         ),
                       ),
                     ),
@@ -135,17 +145,19 @@ class _MRI_Page2State extends State<MRI_Page> {
                       height: 42,
                     ),
                     ElevatedButton(
-                      onPressed: () async {
-                        await upload();
-                        await _processImage();
-                      },
+                      onPressed: _imageFile == null
+                          ? null
+                          : () async {
+                              await upload();
+                              // await _processImage();
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xffa1dfd8),
                       ),
                       child: const Text(
                         'Get listdata',
                         style: TextStyle(
-                          color: Color(0xfffffffff),
+                          color: Color.fromARGB(255, 14, 0, 0),
                         ),
                       ),
                     ),
@@ -156,41 +168,42 @@ class _MRI_Page2State extends State<MRI_Page> {
             const SizedBox(
               height: 50,
             ),
-            _imageFile != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Result IS : ',
+            _isUploading
+                ? const CircularProgressIndicator()
+                : _imageFile != null && listdata.isNotEmpty
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Result IS : ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            listdata.first['class'],
+                            style: const TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23,
+                            ),
+                          ),
+                        ],
+                      )
+                    : const Text(
+                        'THE MODEL HAS NOT BEEN PREDICTED',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 15,
                         ),
                       ),
-                      // Display the first item in the listdata
-                      if (listdata.isNotEmpty)
-                        Text(
-                          listdata.first['class'],
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                          ),
-                        ),
-                    ],
-                  )
-                : const Text(
-                    'THE MODEL HAS NOT BEEN PREDICTED',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
             const SizedBox(
               height: 50,
             ),
+            // Progress bar showing the upload progress
             SizedBox(
               width: 200,
               child: Stack(

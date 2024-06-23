@@ -1,17 +1,16 @@
-import 'package:chat_project_test2/models/services_category_model.dart';
+import 'package:chat_project_test2/pages/NewaTest1/screens/News_page.dart';
+import 'package:chat_project_test2/pages/home/models/services_category_model.dart';
+import 'package:chat_project_test2/pages/Chat/chat_test_ai/chat_screen.dart';
 import 'package:chat_project_test2/pages/Remider_test/reminder_page.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../constant.dart';
-import '../Chat/Chat_AI_Genret/AI_chatbot.dart';
 import '../Chat/Gemini_chat/gemini_chats_screen.dart';
-import '../NewaTest1/screens/News_page.dart';
 
 import 'widget/services_home_wedget.dart';
 import '../All Doctor/All_Doctor_pages/all_doctors_list_views_builder.dart';
 // import '../Reminder_Notifcations/reminder_page1.dart';
-import '../mri.dart';
+import '../MRI/mri.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,7 +18,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: KprimaryColor4,
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +48,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(11)),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, News_page.id);
+                    Navigator.pushNamed(context, NewsPage.id);
                   },
                   child: Container(
                     height: 160,
@@ -92,7 +91,7 @@ class HomePage extends StatelessWidget {
                       category: ServicesCategoryModel(
                           image: 'assets/images/AI_Chatbot.png',
                           categoryName: 'AI Chatbot',
-                          categoryNamePage: Ai_ChatBot.id),
+                          categoryNamePage: ChatAiTest.id),
                     ),
                     const SizedBox(
                       width: 6,
@@ -109,7 +108,7 @@ class HomePage extends StatelessWidget {
                     ServicesWidgets(
                       category: ServicesCategoryModel(
                           image: 'assets/images/chatbot.png',
-                          categoryName: 'Chatbot',
+                          categoryName: 'Gemini',
                           categoryNamePage: GeminiChatScreen.id),
                     ),
                   ],
@@ -120,7 +119,7 @@ class HomePage extends StatelessWidget {
                     ServicesWidgets(
                       category: ServicesCategoryModel(
                           image: 'assets/images/Alzaheime MRI.png',
-                          categoryName: 'Alzaheime MRI',
+                          categoryName: 'Alzheimer MRI',
                           categoryNamePage: MRI_Page.id),
                     ),
                     const SizedBox(

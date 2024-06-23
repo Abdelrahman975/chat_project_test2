@@ -7,8 +7,20 @@ import 'widget/clinic_visit_container.dart';
 import 'widget/custom_button_dcotor.dart';
 import 'widget/doctor_details_contener.dart';
 
+// ignore: must_be_immutable
 class AbuotDoctorPage extends StatelessWidget {
-  const AbuotDoctorPage({super.key});
+  AbuotDoctorPage({super.key, required this.doctorMap});
+  Map doctorMap = {};
+  late String doctorName = doctorMap['name'];
+  late String doctorImage = doctorMap['Image'];
+  late String doctorCity = doctorMap['city'];
+  late int doctorExper = doctorMap['experience'];
+  late int doctorCost = doctorMap['cost'];
+  late String doctorPosition = doctorMap['position'];
+  late String doctorQualific = doctorMap['qualification'];
+  late String doctorHospitalWork = doctorMap['hospital'];
+  late String doctordescription = doctorMap['description'] ?? '';
+
   static String id = 'About Doctor page';
 
   @override
@@ -17,12 +29,12 @@ class AbuotDoctorPage extends StatelessWidget {
       backgroundColor: KprimaryColor4,
       appBar: AppBar(
         backgroundColor: KprimaryColor2,
-        title: const Text(
-          'Name Doctor.........',
+        title: Text(
+          doctorName,
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 20,
             color: KprimaryColor3,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
@@ -30,8 +42,13 @@ class AbuotDoctorPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ListView(
           children: [
-            AboutDoctorContainer(),
-            Clinic_Visit_Container(),
+            AboutDoctorContainer(
+              doctorMap: doctorMap,
+            ),
+            Clinic_Visit_Container(
+              doctorAdress: doctorCity,
+              doctorCost: doctorCost,
+            ),
             SizedBox(
               height: 10,
             ),
@@ -42,7 +59,12 @@ class AbuotDoctorPage extends StatelessWidget {
                   titel: 'Book Now',
                   myIcon: Icons.book_online,
                   onTap: () {
-                    Navigator.pushNamed(context, Book_Now_page.id);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Book_Now_page(
+                                  doctorMap: doctorMap,
+                                )));
                   },
                 ),
                 CustomButtomDoctor(
@@ -51,7 +73,9 @@ class AbuotDoctorPage extends StatelessWidget {
                 ),
               ],
             ),
-            DoctorDetailsContener(),
+            DoctorDetailsContener(
+              doctordescription: doctordescription,
+            ),
           ],
         ),
       ),

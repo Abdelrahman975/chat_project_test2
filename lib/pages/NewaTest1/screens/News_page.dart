@@ -1,90 +1,123 @@
-//let's start by our home screen
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:chat_project_test2/pages/NewaTest1/models/news_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constant.dart';
-import '../../home/drawer/drawer_screen.dart';
 import '../components/breaking_news_card.dart';
 import '../components/news_list_tile.dart';
-import '../models/news_model.dart';
 
-class News_page extends StatefulWidget {
+class NewsPage extends StatefulWidget {
   static String id = 'News_page view';
-  const News_page({Key? key}) : super(key: key);
+  const NewsPage({Key? key}) : super(key: key);
 
   @override
-  State<News_page> createState() => _News_pageState();
+  State<NewsPage> createState() => _NewsPageState();
 }
 
-class _News_pageState extends State<News_page> {
+class _NewsPageState extends State<NewsPage> {
+  late Future<List<NewsData>> breakingNews;
+  late Future<List<NewsData>> recentNews;
+
+  @override
+  void initState() {
+    super.initState();
+    breakingNews = NewsData.fetchBreakingNews();
+    recentNews = NewsData.fetchRecentNews();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer_widget(),
-      //let's start with the Appbar
+      // drawer: DrawerWidget(),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: KprimaryColor2,
-        title: Text(
+        title: const Text(
           "NewsApp",
           style: TextStyle(color: Colors.black),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: Colors.black,
-              ))
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {},
+        //       icon: Icon(
+        //         Icons.notifications_outlined,
+        //         color: Colors.black,
+        //       ))
+        // ],
       ),
-
-      //Let's now work on the body
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Breaking News",
                 style: TextStyle(
                   fontSize: 26.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              //let's build our caroussel
-              CarouselSlider.builder(
-                  itemCount: NewsData.breakingNewsData.length,
-                  itemBuilder: (context, index, id) =>
-                      BreakingNewsCard(NewsData.breakingNewsData[index]),
-                  options: CarouselOptions(
-                    aspectRatio: 16 / 9,
-                    enableInfiniteScroll: false,
-                    enlargeCenterPage: true,
-                  )),
-              SizedBox(
+              // Carousel for breaking news
+              FutureBuilder<List<NewsData>>(
+                future: breakingNews,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                        child: Text('No breaking news available'));
+                  } else {
+                    return CarouselSlider.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index, id) =>
+                          BreakingNewsCard(snapshot.data![index]),
+                      options: CarouselOptions(
+                        aspectRatio: 16 / 9,
+                        enableInfiniteScroll: false,
+                        enlargeCenterPage: true,
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(
                 height: 40.0,
               ),
-              Text(
+              const Text(
                 "Recent News",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16.0,
               ),
-              //now let's create the cards for the recent news
-              Column(
-                children: NewsData.recentNewsData
-                    .map((e) => NewsListTile(e))
-                    .toList(),
+              // List of recent news
+              FutureBuilder<List<NewsData>>(
+                future: recentNews,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                        child: Text('No recent news available'));
+                  } else {
+                    return Column(
+                      children:
+                          snapshot.data!.map((e) => NewsListTile(e)).toList(),
+                    );
+                  }
+                },
               ),
             ],
           ),

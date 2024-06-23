@@ -1,3 +1,5 @@
+import 'package:chat_project_test2/pages/All%20Doctor/Proceed_pages_1/add_patient_page.dart';
+import 'package:chat_project_test2/pages/All%20Doctor/Proceed_pages_1/success_page/success_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constant.dart';
@@ -6,9 +8,12 @@ import '../about_doctor_pages/widget/about_doctor_container.dart';
 import '../about_doctor_pages/widget/custom_button_dcotor.dart';
 import 'widget/paymen_dtetails_contener.dart';
 
+// ignore: must_be_immutable
 class Proceed_page extends StatelessWidget {
-  const Proceed_page({super.key});
+  Proceed_page({super.key, required this.doctorMap});
   static String id = 'Proceed page';
+  Map doctorMap;
+  late int doctorCost = doctorMap['cost'];
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,9 @@ class Proceed_page extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ListView(
           children: [
-            AboutDoctorContainer(),
+            AboutDoctorContainer(
+              doctorMap: doctorMap,
+            ),
             const Text(
               'Patient Details',
               style: TextStyle(
@@ -41,6 +48,10 @@ class Proceed_page extends StatelessWidget {
             CustomButtomDoctor(
               titel: 'Add Patient',
               myIcon: Icons.person_add,
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddPatientPage()));
+              },
             ),
             const SizedBox(
               height: 10,
@@ -56,7 +67,9 @@ class Proceed_page extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            PaymentDetailsContaner(),
+            PaymentDetailsContaner(
+              doctorCost: doctorCost,
+            ),
             const SizedBox(
               height: 80,
             ),
@@ -93,6 +106,12 @@ class Proceed_page extends StatelessWidget {
             ),
             CustomButtom(
               titel: 'Book Appointment',
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SuccessPage2()));
+              },
             ),
             const SizedBox(
               height: 25,

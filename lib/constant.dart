@@ -6,6 +6,7 @@ const KprimaryColor = Color(0xfff0f3f5);
 const KprimaryColor2 = Color(0xffa1dfd8);
 const KprimaryColor3 = Color(0xff1C665E);
 const KprimaryColor4 = Color(0xffe8ebed);
+const KprimaryColor6 = Color(0xffc1e8e3);
 const KprimaryColor5 = Color.fromARGB(255, 85, 214, 199);
 
 const klogo = 'assets/images/AIDoctor.png';

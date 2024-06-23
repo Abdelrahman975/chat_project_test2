@@ -262,7 +262,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 20,
                 ),
                 CustomButtomImage(
-                  titel: 'Register With Google',
+                  titel: 'Google',
                   Imgaess: 'assets/images/Google__G__logo.svg.png',
                   onTap: () async {
                     bool result = await _authMethods.signInWithGoogle();
